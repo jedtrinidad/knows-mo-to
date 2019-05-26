@@ -1,16 +1,16 @@
 <template>
   <div class="home">
     <h1 class="is-size-1">Knows Mo To'</h1>
-    <router-link to="/quiz/0" :tag="button" class="button is-primary">Play Now</router-link>
+    <router-link to="/quiz/0" class="button is-primary is-outlined is-rounded">Play Now</router-link>
     <h4>or</h4>
     <h4 class="is-size-4">Select Quiz Category</h4>
-    <div class="tile is-ancestor" id="parent-tile">
-      <div class="tile is-parent" v-for="(category, index) in categories" v-bind:key="index">
-        <div class="tile is-child">
-          <category :name="category.name" :id="category.id"/>
-        </div>
-      </div>
-    </div>
+    <article class="tags">
+      <category 
+        v-for="(category, index) in categories"
+        v-bind:id="category.id"
+        v-bind:name="category.name"
+        v-bind:key="index"></category>
+    </article>
   </div>
 </template>
 
