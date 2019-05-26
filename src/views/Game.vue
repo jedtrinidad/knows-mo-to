@@ -43,24 +43,7 @@ export default {
         }
     },
     beforeMount() {
-        if (this.$props.id === 0) {
-            fetch(`https://opentdb.com/api.php?amount=10`)
-                .then((res) => res.json())
-                .then((data) => { 
-                    this.questions = data.results
-                    this.currentQuestion = this.questions[this.questionIndex]
-                })
-                .catch((err) => console.log(err))
-        }
-        else {
-            fetch(`https://opentdb.com/api.php?amount=10&category=${this.$props.id}`)
-                .then((res) => res.json())
-                .then((data) => { 
-                    this.questions = data.results 
-                    this.currentQuestion = this.questions[this.questionIndex]
-                })
-                .catch((err) => console.log(err))
-        }
+        
     }
 }
 </script>

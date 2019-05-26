@@ -1,5 +1,5 @@
 <template>
-    <div class="category">
+    <div class="notification has-text-centered is-primary">
         <router-link :to="{name: 'quiz', params: { id: id, name: name }}">{{ name }}</router-link>
     </div>
 </template>
@@ -11,16 +11,4 @@ export default {
 }
 </script>
 
-<style scoped>
-.category {
-    padding: 5px;
-    font-size: 15px;
-}
-a {
-    color:  #2c3e50;
-}
-a:hover {
-    color: #42b983;
-}
-</style>
 
