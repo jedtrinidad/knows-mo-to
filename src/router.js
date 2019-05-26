@@ -24,7 +24,7 @@ export default new Router({
     {
       path: '/quiz/:id',
       name: 'quiz',
-      component: () => import(/* webpackChunkName: "about" */ './views/Game.vue'),
+      component: () => import(/* webpackChunkName: "game" */ './views/Game.vue'),
       props: true 
     }
   ]

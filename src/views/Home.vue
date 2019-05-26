@@ -1,6 +1,8 @@
 <template>
   <div class="home">
     <h1>Knows Mo To'</h1>
+    <router-link to="/quiz/0">Play Now</router-link>
+    <h4>or</h4>
     <h4>Select Quiz Category</h4>
     <div v-for="(category, index) in categories" v-bind:key="index">
       <category :id="category.id" :name="category.name"/>

@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <router-link :to="{name: 'quiz', params: { id: id }}" tag="button">{{ name }}</router-link>
+    <div class="category">
+        <router-link :to="{name: 'quiz', params: { id: id, name: name }}">{{ name }}</router-link>
     </div>
 </template>
 
@@ -10,4 +10,17 @@ export default {
     props: ['name', 'id']
 }
 </script>
+
+<style scoped>
+.category {
+    padding: 5px;
+    font-size: 15px;
+}
+a {
+    color:  #2c3e50;
+}
+a:hover {
+    color: #42b983;
+}
+</style>
 
