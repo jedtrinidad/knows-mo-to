@@ -2,14 +2,16 @@
   <div class="home">
     <h1 class="is-size-1">Knows Mo To'</h1>
     <router-link to="/quiz/0" class="button is-primary is-outlined is-rounded">Play Now</router-link>
-    <h4>or</h4>
-    <h4 class="is-size-4">Select Quiz Category</h4>
-    <article class="tags">
-      <category 
-        v-for="(category, index) in categories"
-        v-bind:id="category.id"
-        v-bind:name="category.name"
-        v-bind:key="index"></category>
+    <h4 class="is-size-4">or</h4>
+    <article class="box">
+      <p class="is-size-4">Select a Category</p>
+      <div class="tags">
+        <category 
+          v-for="(category, index) in categories"
+          v-bind:id="category.id"
+          v-bind:name="category.name"
+          v-bind:key="index"></category>
+      </div>
     </article>
   </div>
 </template>
