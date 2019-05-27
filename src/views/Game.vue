@@ -1,17 +1,22 @@
 <template>
-    <div id="game">
+    <main id="game" class="box">
         <loading :active.sync="isLoading" :can-cancel="false" loader="dots"></loading>
-    </div>
+
+        <question v-bind:question-object="question"></question>
+        <answers v-bind:answer-array="question.incorrect_answers"></answers>
+    </main>
 </template>
 
 <script>
+import Question from '@/components/Question.vue'
+import Answers from '@/components/Answers.vue'
 import Loading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/vue-loading.css'
 
 export default {
     name: 'game',
     components: {
-        Loading
+        Loading, Question, Answers
     },
     data() {
         return {
@@ -20,13 +25,14 @@ export default {
             questions: []
         }
     },
-    created() {
+    mounted() {
+        let id = this.$route.params.id
         this.isLoading = true
-        this.$store.dispatch('getQuestions', this.$route.id)
+        this.$store.dispatch('getQuestions', id)
             .then(() => {
                 this.isLoading = false
-                this.question = this.$store.state.question
-                this.questions = this.$store.state.questions
+                this.questions = this.$store.getters.convertedQuestions
+                this.question = this.$store.getters.convertedQuestion
             })
     }
 }
