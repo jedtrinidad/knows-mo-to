@@ -45,12 +45,18 @@ export default {
       isLoading: false
     };
   },
+  methods: {
+    startGame() {
+      alert("OK")
+    }
+  },
   created() {
-    this.isLoading = true;
-    this.$store.dispatch("getCategories").then(data => {
-      this.categories = data;
-      this.isLoading = false;
-    });
+    this.isLoading = true
+    this.$store.dispatch('getCategories')
+      .then(() => {
+        this.isLoading = false
+        this.categories = this.$store.state.categories
+      })
   }
 };
 </script>
