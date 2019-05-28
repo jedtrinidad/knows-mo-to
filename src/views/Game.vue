@@ -7,7 +7,6 @@
             v-on:nextQuestion="getQuestion($event)"></answers>
         <div v-if="isDone">
             <h1 class="is-size-2">Quiz Done</h1>
-            <doughnut></doughnut>
         </div>
     </main>
 </template>
@@ -17,12 +16,11 @@ import Question from '@/components/Question.vue'
 import Answers from '@/components/Answers.vue'
 import Loading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/vue-loading.css'
-import Doughnut from '@/components/Doughnut.vue'
 
 export default {
     name: 'game',
     components: {
-        Loading, Question, Answers, Doughnut
+        Loading, Question, Answers
     },
     data() {
         return {
