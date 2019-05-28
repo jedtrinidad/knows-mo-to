@@ -1,9 +1,10 @@
 <template>
     <main id="game" class="box">
         <loading :active.sync="isLoading" :can-cancel="false" loader="dots"></loading>
-
+        
         <question v-bind:question-object="question"></question>
-        <answers v-bind:answer-array="question.incorrect_answers"></answers>
+        <answers v-bind:question-object="question"
+            v-on:nextQuestion="getQuestion($event)"></answers>
     </main>
 </template>
 
@@ -34,6 +35,11 @@ export default {
                 this.questions = this.$store.getters.convertedQuestions
                 this.question = this.$store.getters.convertedQuestion
             })
+    },
+    methods: {
+        getQuestion() {
+            this.question = this.questions.pop()
+        }
     }
 }
 </script>
