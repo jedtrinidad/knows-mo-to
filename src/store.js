@@ -62,7 +62,9 @@ export default new Vuex.Store({
 
       qArray.forEach(q => {
         q.question = decodeHtml(q.question)
-        q.incorrect_answers.push(q.correct_answer)
+        var i = Math.floor(Math.random() * q.incorrect_answers.length)
+        q.incorrect_answers.splice(i, 0, q.correct_answer)
+        
         q.incorrect_answers = q.incorrect_answers.map(i => decodeHtml(i))
       })
       return qArray
@@ -70,7 +72,8 @@ export default new Vuex.Store({
     convertedQuestion: state => {
       let q = state.question
       q.question = decodeHtml(q.question)
-      q.incorrect_answers.push(q.correct_answer)
+      var i = Math.floor(Math.random() * q.incorrect_answers.length)
+      q.incorrect_answers.splice(i, 0, q.correct_answer)
       q.incorrect_answers = q.incorrect_answers.map(i => decodeHtml(i))
 
       return q
