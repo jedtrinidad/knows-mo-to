@@ -41,8 +41,8 @@ export default {
   },
   data() {
     return {
-      categories: [],
-      isLoading: false
+      categories: this.$store.state.categories,
+      isLoading: this.$store.state.isLoading
     };
   },
   methods: {

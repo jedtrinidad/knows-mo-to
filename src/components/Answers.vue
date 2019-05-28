@@ -41,6 +41,7 @@ export default {
             else {
                 this.isCorrect = false
             }
+            alert(`Correct Answer: ${this.correct}`)
             this.nextQuestion()
         },
         nextQuestion() {

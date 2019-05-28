@@ -19,6 +19,9 @@ export default new Vuex.Store({
     setQuestions: (state, questions) => {
       state.questions = questions
       state.question = state.questions.shift()
+    },
+    setResults: (state, results) => {
+      state.results = results
     }
   },
   actions: {
@@ -48,6 +51,9 @@ export default new Vuex.Store({
       } catch (error) {
         alert(error)
       }
+    },
+    setResults(context, resultObject) {
+      context.commit('setResults', resultObject)
     }
   },
   getters: {
