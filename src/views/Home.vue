@@ -3,22 +3,20 @@
     <loading :active.sync="isLoading" :can-cancel="false" loader="dots"></loading>
     <div class="columns">
       <div class="column has-text-centered">
-        <img src="@/assets/knows_mo_to_logo.png" alt="logo">
-        <router-link to="/quiz/0" class="button is-primary is-outlined is-rounded">Play Now</router-link>
-        <p class="subtitle">
-          Questions from
-          <a href="https://opentdb.com/" target="_blank">Open Trivia Database</a>
-        </p>
+        <img src="@/assets/knows_mo_to_logo.png" alt="logo" height="450" width="450">
       </div>
       <div class="column">
         <article class="box">
-          <p class="is-size-4 has-text-right notification is-primary">Select a Category To Begin</p>
+          <div class="notification is-primary has-text-right">
+            <p class="is-size-4">Select a Category To Begin</p>
+            <router-link to="/quiz/0" class="button is-primary is-outlined is-rounded is-inverted">Play With Random Questions</router-link>
+          </div>
           <div class="tags">
             <category
               v-for="(category, index) in categories"
               v-bind:id="category.id"
               v-bind:name="category.name"
-              v-bind:key="index"
+              v-bind:key="index" ref="category"
             ></category>
           </div>
         </article>
@@ -57,19 +55,27 @@ export default {
         this.isLoading = false
         this.categories = this.$store.state.categories
       })
+  },
+  updated() {
+    let targets = this.$refs.category.map(cat => cat.$el)
+    this
+      .$anime
+      .timeline()
+      .add({
+        targets,
+        opacity: 0,
+        duration: 150
+      })
+      .add({
+        targets,
+        opacity: 1,
+        duration: 150,
+        easing: 'linear',
+        delay: this.$anime.stagger(200)
+      })
   }
 };
 </script>
-
-<style scoped>
-#parent-tile {
-  flex-wrap: wrap;
-}
-
-#id {
-  text-align: center;
-}
-</style>
 
 
 

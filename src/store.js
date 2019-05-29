@@ -71,12 +71,17 @@ export default new Vuex.Store({
     },
     convertedQuestion: state => {
       let q = state.question
-      q.question = decodeHtml(q.question)
-      var i = Math.floor(Math.random() * q.incorrect_answers.length)
-      q.incorrect_answers.splice(i, 0, q.correct_answer)
-      q.incorrect_answers = q.incorrect_answers.map(i => decodeHtml(i))
+      if(q !== null) {
+        q.question = decodeHtml(q.question)
+        var i = Math.floor(Math.random() * q.incorrect_answers.length)
+        q.incorrect_answers.splice(i, 0, q.correct_answer)
+        q.incorrect_answers = q.incorrect_answers.map(i => decodeHtml(i))
 
-      return q
+        return q
+      }
+      else {
+        return Object
+      }
     }
   }
 })

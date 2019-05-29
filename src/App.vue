@@ -1,8 +1,18 @@
 <template>
   <div id="app">
-    <div class="navbar has-shadow">
-      <router-link to="/" class="navbar-item">Home</router-link>
-    </div>
+    <nav class="navbar has-shadow is-light">
+      <div class="navbar-menu">
+        <router-link to="/" class="navbar-item">Home</router-link>
+        <div class="navbar-end">
+          <div class="navbar-item">
+            <p>
+              Questions from
+              <a href="https://opentdb.com/" target="_blank">Open Trivia Database</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </nav>
     <section class="section">
       <main class="container">
         <router-view/>

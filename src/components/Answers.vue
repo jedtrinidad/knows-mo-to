@@ -22,7 +22,6 @@ export default {
     props: ["questionObject"],
     data() {
         return {
-            choices: [],
             selected: '',
             correct: '',
             isCorrect: false,
@@ -41,7 +40,7 @@ export default {
             else {
                 this.isCorrect = false
             }
-            alert(`Correct Answer: ${this.correct}`)
+            //alert(`Correct Answer: ${this.correct}`)
             this.nextQuestion()
         },
         nextQuestion() {

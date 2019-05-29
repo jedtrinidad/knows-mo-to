@@ -7,18 +7,7 @@
 <script>
 export default {
     name: 'category',
-    props: ['name', 'id'],
-    mounted() {
-        const targets = this.$el
-        console.log(this.$el)
-        this.$anime
-            .timeline()
-            .add({
-                targets,
-                translateX: 5,
-                easing: 'easeOutExpo'
-            })
-    }
+    props: ['name', 'id']
 }
 </script>
 
