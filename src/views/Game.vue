@@ -44,6 +44,20 @@ export default {
   },
   mounted() {
     this.getQuestions()
+    this
+      .$anime
+      .timeline()
+      .add({
+        targets: this.$el,
+        opacity: 0,
+        translateY: 100,
+        duration: 120
+      })
+      .add({
+        targets: this.$el,
+        opacity: 1,
+        translateY: 0
+      })
   },
   destroyed() {
     this.$store.dispatch('setResults', { correct: 0, incorrect: 0 })
@@ -72,7 +86,7 @@ export default {
     beforeEnter(el) {
       el.style.opacity = 0
     },
-    enter(el, done) {
+    enter(el) {
       this
         .$anime
         .timeline()

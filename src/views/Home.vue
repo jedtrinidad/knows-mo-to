@@ -58,7 +58,7 @@ export default {
     beforePlayFieldEnter(el) {
       el.style.opacity = 0
     },
-    playFieldEnter(el, done) {
+    playFieldEnter(el) {
       this
         .$anime
         .timeline()
@@ -89,16 +89,15 @@ export default {
       .add({
         targets,
         opacity: 0,
-        duration: 150
+        duration: 200,
+        easing: 'linear'
       })
       .add({
         targets,
         opacity: 1,
-        duration: 150,
-        easing: "linear",
         delay: this.$anime.stagger(200)
       });
-  }
+  },
 };
 </script>
 

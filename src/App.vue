@@ -2,7 +2,7 @@
   <div id="app">
     <nav class="navbar has-shadow is-light is-fixed-bottom">
       <div class="navbar-menu">
-        <router-link to="/" class="navbar-item">Home</router-link>
+        <router-link to="/" class="navbar-item">Main Menu</router-link>
         <div class="navbar-item">
           <p>
             Correct: {{$store.state.results.correct}}
