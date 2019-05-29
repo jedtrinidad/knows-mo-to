@@ -5,8 +5,17 @@
         <question v-bind:question-object="question" v-if="!isDone"></question>
         <answers v-bind:question-object="question" v-if="!isDone"
             v-on:nextQuestion="getQuestion($event)"></answers>
-        <div v-if="isDone">
+        <div v-show="isDone">
             <h1 class="is-size-2">Quiz Done</h1>
+            <div class="level">
+                <div class="level-left">
+                    <p class="is-size-1">Correct Answers {{$store.state.results.correct}}</p>
+                </div>
+                <div class="level-right">
+                    <p class="is-size-1">Wrong Answers {{$store.state.results.incorrect}}</p>
+                </div>
+            </div>
+            <router-link class="button is-rounded is-outlined is-primary" to="/">Play Again?</router-link>
         </div>
     </main>
 </template>

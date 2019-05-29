@@ -2,7 +2,6 @@
   <div id="app">
     <div class="navbar has-shadow">
       <router-link to="/" class="navbar-item">Home</router-link>
-      <router-link to="/about" class="navbar-item">About</router-link>
     </div>
     <section class="section">
       <main class="container">

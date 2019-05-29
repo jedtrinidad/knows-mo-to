@@ -3,7 +3,7 @@
     <loading :active.sync="isLoading" :can-cancel="false" loader="dots"></loading>
     <div class="columns">
       <div class="column has-text-centered">
-        <h1 class="is-size-1">Knows Mo To'</h1>
+        <img src="@/assets/knows_mo_to_logo.png" alt="logo">
         <router-link to="/quiz/0" class="button is-primary is-outlined is-rounded">Play Now</router-link>
         <p class="subtitle">
           Questions from

@@ -3,6 +3,9 @@ import App from './App.vue'
 import 'bulma/css/bulma.css'
 import router from './router'
 import store from './store'
+import VueAnime from 'vue-animejs'
+
+Vue.use(VueAnime)
 
 Vue.config.productionTip = false
 
