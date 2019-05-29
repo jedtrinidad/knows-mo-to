@@ -6,16 +6,23 @@
         <p class="is-size-1">Correct Answers: {{ $store.state.results.correct }}</p>
       </div>
       <div class="level-right">
-        <p class="is-size-1">Incorrect Answers: {{ $store.state.results.incorrect}}</p>
+        <p class="is-size-1">Incorrect Answers: {{ $store.state.results.incorrect }}</p>
       </div>
     </div>
-    <router-link class="button is-rounded is-outlined is-primary" to="/">Play Again?</router-link>
+    <p class="is-size-2">Accuracy: {{ ($store.state.results.correct / 10) * 100 }}%</p>
+    <button class="button is-rounded is-outlined is-primary" v-on:click="playAgain">Play Again?</button>
   </div>
 </template>
 
 <script>
 export default {
-  name: "results"
+  name: "results",
+  methods: {
+    playAgain() {
+      this.$emit('replay')
+      this.$store.dispatch('setResults', { correct: 0, incorrect: 0 })
+    }
+  }
 };
 </script>
 

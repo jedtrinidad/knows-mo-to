@@ -1,27 +1,35 @@
 <template>
   <div id="home">
     <loading :active.sync="isLoading" :can-cancel="false" loader="dots"></loading>
-    <div class="columns">
-      <div class="column has-text-centered">
-        <img src="@/assets/knows_mo_to_logo.png" alt="logo" height="450" width="450">
+    <transition
+      v-on:before-enter="beforePlayFieldEnter"
+      v-on:enter="playFieldEnter">
+      <div class="columns" v-if="!isLoading">
+        <div class="column has-text-centered">
+          <img src="@/assets/knows_mo_to_logo.png" alt="logo" height="450" width="450">
+        </div>
+        <div class="column">
+          <article class="box">
+            <div class="notification is-primary has-text-right">
+              <p class="is-size-4">Select a Category To Begin</p>
+              <router-link
+                to="/quiz/0"
+                class="button is-primary is-outlined is-rounded is-inverted"
+              >Play With Random Questions</router-link>
+            </div>
+            <div class="tags">
+              <category
+                v-for="(category, index) in categories"
+                v-bind:id="category.id"
+                v-bind:name="category.name"
+                v-bind:key="index"
+                ref="category"
+              ></category>
+            </div>
+          </article>
+        </div>
       </div>
-      <div class="column">
-        <article class="box">
-          <div class="notification is-primary has-text-right">
-            <p class="is-size-4">Select a Category To Begin</p>
-            <router-link to="/quiz/0" class="button is-primary is-outlined is-rounded is-inverted">Play With Random Questions</router-link>
-          </div>
-          <div class="tags">
-            <category
-              v-for="(category, index) in categories"
-              v-bind:id="category.id"
-              v-bind:name="category.name"
-              v-bind:key="index" ref="category"
-            ></category>
-          </div>
-        </article>
-      </div>
-    </div>
+    </transition>
   </div>
 </template>
 
@@ -45,21 +53,38 @@ export default {
   },
   methods: {
     startGame() {
-      alert("OK")
+      alert("OK");
+    },
+    beforePlayFieldEnter(el) {
+      el.style.opacity = 0
+    },
+    playFieldEnter(el, done) {
+      this
+        .$anime
+        .timeline()
+        .add({
+          targets: el,
+          opacity: 0,
+          duration: 120,
+          translateY: 100
+        })
+        .add({
+          targets: el,
+          opacity: 1,
+          translateY: 0
+        })
     }
   },
   created() {
-    this.isLoading = true
-    this.$store.dispatch('getCategories')
-      .then(() => {
-        this.isLoading = false
-        this.categories = this.$store.state.categories
-      })
+    this.isLoading = true;
+    this.$store.dispatch("getCategories").then(() => {
+      this.isLoading = false;
+      this.categories = this.$store.state.categories;
+    });
   },
   updated() {
-    let targets = this.$refs.category.map(cat => cat.$el)
-    this
-      .$anime
+    let targets = this.$refs.category.map(cat => cat.$el);
+    this.$anime
       .timeline()
       .add({
         targets,
@@ -70,9 +95,9 @@ export default {
         targets,
         opacity: 1,
         duration: 150,
-        easing: 'linear',
+        easing: "linear",
         delay: this.$anime.stagger(200)
-      })
+      });
   }
 };
 </script>

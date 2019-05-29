@@ -1,8 +1,13 @@
 <template>
   <div id="app">
-    <nav class="navbar has-shadow is-light">
+    <nav class="navbar has-shadow is-light is-fixed-bottom">
       <div class="navbar-menu">
         <router-link to="/" class="navbar-item">Home</router-link>
+        <div class="navbar-item">
+          <p>
+            Correct: {{$store.state.results.correct}}
+          </p>
+        </div>
         <div class="navbar-end">
           <div class="navbar-item">
             <p>
