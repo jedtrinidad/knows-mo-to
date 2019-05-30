@@ -89,12 +89,14 @@ export default {
       .add({
         targets,
         opacity: 0,
-        duration: 200,
+        duration: 50,
+        translateX: -100,
         easing: 'linear'
       })
       .add({
         targets,
         opacity: 1,
+        translateX: 0,
         delay: this.$anime.stagger(200)
       });
   },
