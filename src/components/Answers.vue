@@ -1,17 +1,9 @@
 <template>
     <article id="answers">
-        <div class="notification is-primary" v-for="(choice, i) in questionObject.incorrect_answers" v-bind:key="i">
-            <div class="level">
-                <div class="level-left">
-                    <h1 class="is-size-4">{{choice}}</h1>
-                </div>
-                <div class="level-right">
-                    <button class="button is-rounded is-outlined is-inverted is-primary"
-                        @click="pickOption(choice)">
-                        SELECT
-                    </button>
-                </div>
-            </div>
+        <div class="notification" v-for="(choice, i) in questionObject.incorrect_answers" 
+            v-bind:key="i" v-bind:class="{ 'is-primary':hasSelected }"
+            v-on:click="pickOption(choice)">
+            <h1 class="is-size-3">{{choice}}</h1>
         </div>
     </article>
 </template>
@@ -29,7 +21,7 @@ export default {
         }
     },
     methods: {
-        pickOption(choice) {
+        pickOption(choice, el) {
             this.hasSelected = true
             this.correct = this.questionObject.correct_answer
             this.selected = choice
@@ -42,6 +34,7 @@ export default {
             }
             //alert(`Correct Answer: ${this.correct}`)
             this.nextQuestion()
+            this.hasSelected = false
         },
         nextQuestion() {
             this.$emit('nextQuestion', this.isCorrect)
