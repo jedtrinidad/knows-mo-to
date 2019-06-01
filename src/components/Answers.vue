@@ -34,7 +34,6 @@ export default {
             }
             //alert(`Correct Answer: ${this.correct}`)
             this.nextQuestion()
-            this.hasSelected = false
         },
         nextQuestion() {
             this.$emit('nextQuestion', this.isCorrect)
