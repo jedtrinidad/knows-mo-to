@@ -12,12 +12,6 @@ export default new Router({
       path: '/',
       name: 'home',
       component: Home
-    },
-    {
-      path: '/quiz/:id',
-      name: 'quiz',
-      component: () => import(/* webpackChunkName: "game" */ './views/Game.vue'),
-      props: true 
     }
   ]
 })
