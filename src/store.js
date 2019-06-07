@@ -35,53 +35,9 @@ export default new Vuex.Store({
       } catch (error) {
         alert(error)
       }
-    },
-    async getQuestions(context, categoryId) {
-      try {
-        if(categoryId > 0 && categoryId !== null) {
-          let response = await fetch(`https://opentdb.com/api.php?amount=10&type=multiple&category=${categoryId}`)
-          let data = await response.json()
-          context.commit('setQuestions', data.results)
-        }
-        else {
-          let response = await fetch(`https://opentdb.com/api.php?amount=10&type=multiple`)
-          let data = await response.json()
-          context.commit('setQuestions', data.results)
-        }
-      } catch (error) {
-        alert(error)
-      }
-    },
-    setResults(context, resultObject) {
-      context.commit('setResults', resultObject)
     }
   },
   getters: {
-    convertedQuestions: state => {
-      let qArray = state.questions
-
-      qArray.forEach(q => {
-        q.question = decodeHtml(q.question)
-        var i = Math.floor(Math.random() * q.incorrect_answers.length)
-        q.incorrect_answers.splice(i, 0, q.correct_answer)
-        
-        q.incorrect_answers = q.incorrect_answers.map(i => decodeHtml(i))
-      })
-      return qArray
-    },
-    convertedQuestion: state => {
-      let q = state.question
-      if(q !== null) {
-        q.question = decodeHtml(q.question)
-        var i = Math.floor(Math.random() * q.incorrect_answers.length)
-        q.incorrect_answers.splice(i, 0, q.correct_answer)
-        q.incorrect_answers = q.incorrect_answers.map(i => decodeHtml(i))
-
-        return q
-      }
-      else {
-        return Object
-      }
-    }
+    
   }
 })

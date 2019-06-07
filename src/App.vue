@@ -1,38 +1,29 @@
 <template>
-  <div id="app">
-    <nav class="navbar has-shadow is-light is-fixed-bottom">
-      <div class="navbar-menu">
-        <router-link to="/" class="navbar-item">Main Menu</router-link>
-        <div class="navbar-item">
-          <p>
-            Correct: {{$store.state.results.correct}}
-          </p>
-        </div>
-        <div class="navbar-end">
-          <div class="navbar-item">
-            <p>
-              Questions from
-              <a href="https://opentdb.com/" target="_blank">Open Trivia Database</a>
-            </p>
-          </div>
-        </div>
-      </div>
-    </nav>
+  <div id="root">
+    <navbar></navbar>
     <section class="section">
       <main class="container">
         <router-view/>
       </main>
     </section>
+    <footer class="footer">
+      <p class="content has-text-centered">
+        Questions from
+        <a href="https://opentdb.com/" target="_blank">Open Trivia Database</a>
+        <br>
+        Check out the code <a href="https://github.com/jedtrinidad/knows-mo-to">here</a>
+      </p>
+    </footer>
   </div>
 </template>
 
-<style>
-#app {
-  /**font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  **/
-  color: #2c3e50;
+<script>
+import Navbar from '@/components/Navbar.vue'
+
+export default {
+  components: {
+    Navbar
+  }
 }
-</style>
+</script>
+
