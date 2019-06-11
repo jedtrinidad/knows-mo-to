@@ -12,7 +12,7 @@
                 <span aria-hidden="true"></span>
             </a>
         </div>
-        <div class="navbar-menu" v-bind:class="{ 'is-active' : isExpanded }">
+        <div class="navbar-menu" v-bind:class="{ 'is-active' : isExpanded }" v-if="$route.meta.requiresAuth">
             <router-link class="navbar-item" to="/" v-on:click.native="isExpanded = !isExpanded">Home</router-link>
             <router-link class="navbar-item" to="/settings" v-on:click.native="isExpanded = !isExpanded">Settings</router-link>
         </div>

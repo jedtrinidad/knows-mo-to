@@ -11,12 +11,28 @@ export default new Router({
     {
       path: '/',
       name: 'home',
-      component: Home
+      component: Home,
+      meta: {
+        requiresAuth: true,
+        layout: 'default'
+      }
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: () => import(/* webpackChunkName: "login" */ './views/Login.vue'),
+      meta: {
+        layout: 'hero'
+      }
     },
     {
       path: '/settings',
       name: 'settings',
-      component: () => import(/* webpackChunkName: "settings" */ './views/Settings.vue')
+      component: () => import(/* webpackChunkName: "settings" */ './views/Settings.vue'),
+      meta: {
+        requiresAuth: true,
+        layout: 'default'
+      }
     }
   ]
 })

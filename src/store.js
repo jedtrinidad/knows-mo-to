@@ -10,7 +10,9 @@ export default new Vuex.Store({
     questions: [],
     question: Object,
     isLoading: false,
-    results: { correct: 0, incorrect: 0 }
+    results: { correct: 0, incorrect: 0 },
+    user: Object,
+    token: localStorage.getItem('jwt') || ''
   },
   mutations: {
     setCategories: (state, categories) => {
@@ -22,6 +24,10 @@ export default new Vuex.Store({
     },
     setResults: (state, results) => {
       state.results = results
+    },
+    setToken: (state, token) => {
+      state.token = token
+      localStorage.setItem('jwt', state.token)
     }
   },
   actions: {
@@ -38,6 +44,6 @@ export default new Vuex.Store({
     }
   },
   getters: {
-    
+    isLoggedIn: state => !!state.token
   }
 })
