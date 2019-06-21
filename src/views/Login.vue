@@ -15,7 +15,7 @@
           <div class="field">
               <button type="submit" 
               class="button is-rounded is-outlined is-inverted is-primary"
-              @click="handleSubmit">Login</button>
+              @click="handleSubmit" v-bind:class="{'is-loading': isLoading}">Login</button>
           </div>
         </form>
       </div>
@@ -29,12 +29,21 @@ export default {
   data() {
       return {
           name: "",
-          password: ""
+          password: "",
+          isLoading: false
       }
   },
   methods: {
       handleSubmit(e) {
         e.preventDefault()
+
+        if(this.password.length > 0) {
+          this.isLoading = true
+          this.$store.dispatch('login', {name: this.name, password: this.password}).then(() => {
+            this.$router.push({name: "home"})
+            this.isLoading = false
+          })
+        }
       }
   }
 };

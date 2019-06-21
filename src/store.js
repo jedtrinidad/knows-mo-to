@@ -1,34 +1,30 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import {decodeHtml} from './utilities'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
     categories: [],
-    questions: [],
-    question: Object,
     isLoading: false,
     results: { correct: 0, incorrect: 0 },
-    user: Object,
-    token: localStorage.getItem('jwt') || ''
+    user: localStorage.getItem('user') || '',
+    token: localStorage.getItem('jwt') || '',
+    difficulties: ['easy', 'medium', 'hard']
   },
   mutations: {
     setCategories: (state, categories) => {
       state.categories = categories
     },
-    setQuestions: (state, questions) => {
-      state.questions = questions
-      state.question = state.questions.shift()
-    },
     setResults: (state, results) => {
       state.results = results
     },
-    setToken: (state, token) => {
-      state.token = token
+    setTokenAndUser: (state, payload) => {
+      state.token = payload.auth_token
+      state.user = JSON.stringify(payload.user)
       localStorage.setItem('jwt', state.token)
-    }
+      localStorage.setItem('user', state.user)
+    },
   },
   actions: {
     async getCategories(context) {
@@ -41,9 +37,33 @@ export default new Vuex.Store({
       } catch (error) {
         alert(error)
       }
+    },
+    async login(context, params) {
+      try {
+        let response = await fetch("https://kmt-backend.herokuapp.com/api/session", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(params)
+        })
+        let data = await response.json()
+        context.commit('setTokenAndUser', data)
+      }
+      catch (error) {
+        alert(error)
+      }
+    },
+    logout(context) {
+      localStorage.clear()
+    },
+    setResults(context, results) {
+      context.commit('setResults', results)
     }
   },
   getters: {
-    isLoggedIn: state => !!state.token
+    isLoggedIn: state => !!state.token,
+    currentUser: state => JSON.parse(state.user),
+    categories: state => state.categories
   }
 })

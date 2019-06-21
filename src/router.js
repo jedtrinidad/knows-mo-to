@@ -33,6 +33,16 @@ export default new Router({
         requiresAuth: true,
         layout: 'default'
       }
+    },
+    {
+      path: '/game/:categoryId',
+      name: 'game',
+      component: () => import(/* webPackChunkName: "game" */ './views/Game.vue'),
+      meta: {
+        requiresAuth: true,
+        layout: 'hero',
+        hideMenu: true
+      }
     }
   ]
 })

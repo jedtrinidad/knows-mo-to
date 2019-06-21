@@ -14,10 +14,12 @@ Vue.config.productionTip = false
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some(r => r.meta.requiresAuth)) {
-    if (store.getters.isLoggedIn) {
+    if (store.getters.isLoggedIn === false) {
+      next({ name: 'login' })
+    }
+    else {
       next()
     }
-    next({ name: 'login' })
   }
   else {
     next()
