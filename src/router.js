@@ -43,6 +43,16 @@ export default new Router({
         layout: 'hero',
         hideMenu: true
       }
+    },
+    {
+      path: '/results',
+      name: 'results',
+      component: () => import('./views/ResultScreen.vue'),
+      meta: {
+        requiresAuth: true,
+        layout: 'hero',
+        hideMenu: true
+      }
     }
   ]
 })

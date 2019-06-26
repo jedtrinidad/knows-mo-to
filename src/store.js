@@ -7,7 +7,6 @@ export default new Vuex.Store({
   state: {
     categories: [],
     isLoading: false,
-    results: { correct: 0, incorrect: 0 },
     user: localStorage.getItem('user') || '',
     token: localStorage.getItem('jwt') || '',
     difficulties: ['easy', 'medium', 'hard']
@@ -16,15 +15,16 @@ export default new Vuex.Store({
     setCategories: (state, categories) => {
       state.categories = categories
     },
-    setResults: (state, results) => {
-      state.results = results
-    },
     setTokenAndUser: (state, payload) => {
       state.token = payload.auth_token
       state.user = JSON.stringify(payload.user)
       localStorage.setItem('jwt', state.token)
       localStorage.setItem('user', state.user)
     },
+    setUser: (state, payload) => {
+      state.user = JSON.stringify(payload)
+      localStorage.setItem('user', state.user)
+    }
   },
   actions: {
     async getCategories(context) {
@@ -54,16 +54,29 @@ export default new Vuex.Store({
         alert(error)
       }
     },
-    logout(context) {
-      localStorage.clear()
+    async getUserWithGames(context) {
+      let cu = context.getters.currentUser
+      try {
+        let response = await fetch(`https://kmt-backend.herokuapp.com/api/users/${cu.id}/games`, {
+          headers: {
+            "Authorization": `Bearer ${context.state.token}`
+          }
+        })
+        let data = await response.json()
+        context.commit('setUser', data)
+      }
+      catch (error) {
+        alert(error)
+      }
     },
-    setResults(context, results) {
-      context.commit('setResults', results)
+    logout() {
+      localStorage.clear()
     }
   },
   getters: {
     isLoggedIn: state => !!state.token,
     currentUser: state => JSON.parse(state.user),
-    categories: state => state.categories
+    categories: state => state.categories,
+    categoryById: state => id => state.categories.find(cat => cat.id === id)
   }
 })

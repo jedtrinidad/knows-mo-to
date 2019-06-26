@@ -1,7 +1,7 @@
 <template>
   <div id="home">
 
-    <modal ref="customizerModal" can-close="true">
+    <modal ref="customizerModal" can-be-closed>
       <h1 class="title">Custom Game</h1>
 
       <div class="field">
@@ -40,7 +40,7 @@
       </div>
     </modal>
 
-    <modal ref="quickModal" can-close="true">
+    <modal ref="quickModal" can-be-closed>
       <h1 class="title">Quick Game</h1>
       <p class="is-size-5">Select Category</p>
       <table class="table is-fullwidth">
@@ -51,7 +51,7 @@
         <tbody>
           <tr v-for="(cat, i) in categories" v-bind:key="i">
             <td>
-               <router-link :to="{name: 'game', params: {categoryId: cat.id}}">
+               <router-link :to="{name: 'game', params: {categoryId: cat.id}, query: {gameType: 'quick'}}">
                 {{cat.name}}
               </router-link>
             </td>
@@ -81,6 +81,23 @@
           </div>
         </div>
       </div>
+      <div class="tile is-parent">
+        <div class="tile is-parent has-text-centered is-vertical">
+          <h1 class="title">Games</h1>
+          <table class="table is-fullwidth">
+            <thead>
+              <th>Category</th>
+              <th>Score</th>
+            </thead>
+            <tbody>
+              <tr v-for="(game, i) in games" :key="i">
+                <td>{{game.category_name}}</td>
+                <td>{{game.final_score}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -101,7 +118,8 @@ export default {
       selectedDifficulty: '',
       totalQuestions: 55,
       questionAmount: 10,
-      categoryQuestionCount: Object
+      categoryQuestionCount: Object,
+      games: Object
     }
   },
   mounted() {
@@ -112,6 +130,10 @@ export default {
         this.selectedDifficulty = this.$store.state.difficulties[0]
       }
     )
+    this.$store.dispatch('getUserWithGames')
+      .then(() => {
+        this.games = this.$store.getters.currentUser.games
+      })
   },
   methods: {
     launchCustomizerModal() {
@@ -124,11 +146,11 @@ export default {
       this.$router.push({
         name: 'game', 
         params: {categoryId: this.selectedQuestionId},
-        query: {difficulty: this.selectedDifficulty, amount: this.questionAmount} 
+        query: {
+          difficulty: this.selectedDifficulty, 
+          amount: this.questionAmount, 
+          gameType: "custom"} 
       })
-    },
-    getDiff(e) {
-      console.log(e)
     }
   }
 };

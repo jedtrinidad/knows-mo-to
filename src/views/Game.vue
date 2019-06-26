@@ -1,13 +1,17 @@
 <template>
     <div id="game">
-        <div class="box">
-            <p class="is-size-4">Question {{questionCount}} of {{amount}}</p>
+        <h1 class="is-size-1" v-show="isLoading">Loading...</h1>
+        <div v-show="!isLoading">
+            <div class="box">
+                <p class="is-size-4">Question {{questionCount}} of {{amount}}</p>
+                <p class="is-size-5">Score {{this.score}}</p>
+            </div>
+            <question :question="currentQuestion.question"></question>
+            <answers 
+                :options="currentQuestion.incorrect_answers" 
+                :correct-option="currentQuestion.correct_answer"
+                v-on:answeredQuestion="questionAnswered($event)"></answers>
         </div>
-        <question :question="currentQuestion.question"></question>
-        <answers 
-            :options="currentQuestion.incorrect_answers" 
-            :correct-option="currentQuestion.correct_answer"
-            v-on:answeredQuestion="questionAnswered($event)"></answers>
     </div>
 </template>
 
@@ -24,12 +28,15 @@ export default {
             currentQuestion: Object,
             amount: 0,
             questionCount: 0,
-            results: this.$store.state.results,
-            isDone: false
+            score: 0, 
+            isDone: false,
+            isLoading: this.$store.state.isLoading,
+            currentUser: this.$store.getters.currentUser
         }
     },
     methods: {
         async getQuestions(url) {
+            this.isLoading = true
             try {
                 let response = await fetch(url)
                 let data = await response.json()
@@ -44,8 +51,9 @@ export default {
                 this.questions = shuffle(_questions)
             }
             catch(error) {
-                console.log(error)
+                alert(error)
             }
+            this.isLoading = false
             this.currentQuestion = this.questions.pop()
             this.questionCount++
         },
@@ -53,16 +61,37 @@ export default {
             if(this.questions.length !== 0) {
                 this.currentQuestion = this.questions.pop()
                 if(e) {
-                    this.results.correct += 1
+                    switch (this.currentQuestion.difficulty) {
+                        case 'easy':
+                            this.score += 1
+                            break;
+                        case 'medium':
+                            this.score += 5
+                            break;
+                        case 'hard':
+                            this.score += 10
+                            break;
+                        default:
+                            break;
+                    }
                 }
                 else {
-                    this.results.incorrect += 1
+                    this.score -= 1
                 }
             }
             else {
-                alert("Done!")
+                // alert("Done!")
                 this.isDone = true
-                this.$router.push({name: 'home'})
+                this.$router.push({
+                    name: 'results', 
+                    query: {
+                        score: this.score,
+                        difficulty: this.$route.query.difficulty,
+                        amount: this.$route.query.amount,
+                        gameType: this.$route.query.gameType,
+                        category: this.$route.params.categoryId
+                    }
+                })
             }
             this.questionCount++
         }
@@ -81,9 +110,12 @@ export default {
         })
     },
     beforeRouteLeave(to, from, next) {
-        const answer = window.confirm("Are You Sure?")
+        if(this.isDone) {
+            next()
+        }
+        else {
+            let answer = window.confirm("Are you sure?")
 
-        if(this.isDone === true) {
             if(answer) {
                 next()
             }

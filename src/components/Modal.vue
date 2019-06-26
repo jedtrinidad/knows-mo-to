@@ -6,13 +6,14 @@
                 <slot></slot>
             </div>
         </div>
-        <button class="modal-close is-large" aria-label="close" @click="closeModal"></button>
+        <button class="modal-close is-large" aria-label="close" v-if="!canBeClosed" @click="closeModal"></button>
     </div>
 </template>
 
 <script>
 export default {
     name: 'Modal',
+    props: ["canBeClosed"],
     data() {
         return {
             isActive: false
