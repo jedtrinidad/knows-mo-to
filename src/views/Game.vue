@@ -86,8 +86,8 @@ export default {
                     name: 'results', 
                     query: {
                         score: this.score,
-                        difficulty: this.$route.query.difficulty,
-                        amount: this.$route.query.amount,
+                        difficulty: this.$route.query.difficulty || "",
+                        amount: this.$route.query.amount || 10,
                         gameType: this.$route.query.gameType,
                         category: this.$route.params.categoryId
                     }

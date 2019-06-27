@@ -84,14 +84,20 @@
       <div class="tile is-parent">
         <div class="tile is-parent has-text-centered is-vertical">
           <h1 class="title">Games</h1>
-          <table class="table is-fullwidth">
+          <table class="table is-fullwidth is-hover">
             <thead>
+              <th>Type</th>
               <th>Category</th>
+              <th>Difficulty</th>
+              <th>Questions</th>
               <th>Score</th>
             </thead>
             <tbody>
               <tr v-for="(game, i) in games" :key="i">
+                <td>{{game.type}}</td>
                 <td>{{game.category_name}}</td>
+                <td>{{game.difficulty}}</td>
+                <td>{{game.amount_of_questions}}</td>
                 <td>{{game.final_score}}</td>
               </tr>
             </tbody>

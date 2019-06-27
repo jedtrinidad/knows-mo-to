@@ -1,6 +1,6 @@
 <template>
     <div id="results">
-        <modal ref="notification" :can-be-closed="false">
+        <modal ref="notification">
             <h1 class="is-size-1">Sending Results To Server...</h1>
         </modal>
         <div class="box has-text-centered">
@@ -56,7 +56,7 @@ export default {
                 final_score: this.score
             }
         }
-        console.log(JSON.stringify(body))
+        modal.canBeClosed = false
         modal.openModal()
         fetch("https://kmt-backend.herokuapp.com/api/games", {
             method: "POST",
@@ -74,6 +74,7 @@ export default {
         this.category = this.$route.query.category
         this.type = this.$route.query.gameType
         this.difficulty = this.$route.query.difficulty
+        this.amount = parseInt(this.$route.query.amount)
         this.categoryName = this.$store.getters.categoryById(parseInt(this.category)).name
     }
 }
