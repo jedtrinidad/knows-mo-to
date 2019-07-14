@@ -13,10 +13,9 @@
 
 <script>
 import Navbar from '@/components/Navbar.vue'
-
 export default {
-    components: { Navbar },
-    name: 'hero-layout'
+    name: 'hero-layout',
+    components: {Navbar}
 }
 </script>
 

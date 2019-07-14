@@ -1,5 +1,5 @@
 <template>
-  <div id="home">
+  <main id="home">
 
     <modal ref="customizerModal" can-be-closed>
       <h1 class="title">Custom Game</h1>
@@ -83,29 +83,31 @@
       </div>
       <div class="tile is-parent">
         <div class="tile is-parent has-text-centered is-vertical">
-          <h1 class="title">Games</h1>
-          <table class="table is-fullwidth is-hover">
-            <thead>
-              <th>Type</th>
-              <th>Category</th>
-              <th>Difficulty</th>
-              <th>Questions</th>
-              <th>Score</th>
-            </thead>
-            <tbody>
-              <tr v-for="(game, i) in games" :key="i">
-                <td>{{game.type}}</td>
-                <td>{{game.category_name}}</td>
-                <td>{{game.difficulty}}</td>
-                <td>{{game.amount_of_questions}}</td>
-                <td>{{game.final_score}}</td>
-              </tr>
-            </tbody>
-          </table>
+          <h1 class="title">Scoreboard</h1>
+          <div class="table-container">
+            <table class="table is-fullwidth is-hover mobile">
+              <thead>
+                <th>Type</th>
+                <th>Category</th>
+                <th>Difficulty</th>
+                <th>Questions</th>
+                <th>Score</th>
+              </thead>
+              <tbody>
+                <tr v-for="(game, i) in games" :key="i">
+                  <td>{{game.type}}</td>
+                  <td>{{game.category_name}}</td>
+                  <td>{{game.difficulty}}</td>
+                  <td>{{game.amount_of_questions}}</td>
+                  <td>{{game.final_score}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </main>
 </template>
 
 <script>
@@ -138,7 +140,7 @@ export default {
     )
     this.$store.dispatch('getUserWithGames')
       .then(() => {
-        this.games = this.$store.getters.currentUser.games
+        this.games = JSON.parse(this.$store.getters.currentUser).games
       })
   },
   methods: {

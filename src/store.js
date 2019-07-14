@@ -12,16 +12,16 @@ export default new Vuex.Store({
     difficulties: ['easy', 'medium', 'hard']
   },
   mutations: {
-    setCategories: (state, categories) => {
+    SET_CATEGORIES: (state, categories) => {
       state.categories = categories
     },
-    setTokenAndUser: (state, payload) => {
+    SET_TOKEN_AND_USER: (state, payload) => {
       state.token = payload.auth_token
       state.user = JSON.stringify(payload.user)
       localStorage.setItem('jwt', state.token)
       localStorage.setItem('user', state.user)
     },
-    setUser: (state, payload) => {
+    SET_USER: (state, payload) => {
       state.user = JSON.stringify(payload)
       localStorage.setItem('user', state.user)
     }
@@ -32,7 +32,7 @@ export default new Vuex.Store({
         if(context.state.categories.length === 0) {
           let response = await fetch("https://opentdb.com/api_category.php")
           let data = await response.json()
-          context.commit('setCategories', data.trivia_categories)
+          context.commit('SET_CATEGORIES', data.trivia_categories)
         }
       } catch (error) {
         alert(error)
@@ -48,34 +48,56 @@ export default new Vuex.Store({
           body: JSON.stringify(params)
         })
         let data = await response.json()
-        context.commit('setTokenAndUser', data)
+        context.commit('SET_TOKEN_AND_USER', data)
+      }
+      catch (error) {
+        alert(error)
+        context.commit('SET_TOKEN_AND_USER', {})
+      }
+    },
+    logout() {
+      localStorage.clear()
+    },
+    async registerUser(context, userBody) {
+      try {
+        let response = await fetch("https://kmt-backend.herokuapp.com/api/users", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+          },
+          body: JSON.stringify(userBody)
+        })
+
+        let data = await response.json()
+
+        context.commit('SET_USER',data)
       }
       catch (error) {
         alert(error)
       }
     },
     async getUserWithGames(context) {
-      let cu = context.getters.currentUser
+      let cu = JSON.parse(context.state.user)
       try {
         let response = await fetch(`https://kmt-backend.herokuapp.com/api/users/${cu.id}/games`, {
           headers: {
             "Authorization": `Bearer ${context.state.token}`
           }
+
         })
         let data = await response.json()
-        context.commit('setUser', data)
+        context.commit('SET_USER', data)
       }
       catch (error) {
         alert(error)
+        localStorage.clear()
       }
-    },
-    logout() {
-      localStorage.clear()
     }
   },
   getters: {
     isLoggedIn: state => !!state.token,
-    currentUser: state => JSON.parse(state.user),
+    currentUser: state => state.user,
     categories: state => state.categories,
     categoryById: state => id => state.categories.find(cat => cat.id === id)
   }

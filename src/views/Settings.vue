@@ -1,7 +1,7 @@
 <template>
-    <div id="settings">
+    <main id="settings">
         <h1 class="is-size-1">Settings</h1>
-    </div>
+    </main>
 </template>
 
 <script>

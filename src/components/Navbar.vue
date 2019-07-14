@@ -17,7 +17,7 @@
             <router-link class="navbar-item" to="/settings" v-on:click.native="isExpanded = !isExpanded">Settings</router-link>
             <div class="navbar-end">
                 <div class="navbar-item">
-                    {{$store.getters.currentUser.name}}
+                    {{userName}}
                 </div>
                 <div class="navbar-item">
                     <button class="button is-rounded is-danger" @click="logout"
@@ -35,6 +35,11 @@ export default {
         return {
             isExpanded: false,
             isLoading: false
+        }
+    },
+    computed: {
+        userName() {
+            return JSON.parse(this.$store.getters.currentUser).name
         }
     },
     methods: {

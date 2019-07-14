@@ -1,8 +1,8 @@
 <template>
-    <div id="results">
-        <modal ref="notification">
-            <h1 class="is-size-1">Sending Results To Server...</h1>
-        </modal>
+    <main id="results">
+        <div class="notification is-info" v-show="isLoading">
+            Please Wait. Sending Scores To Server...
+        </div>
         <div class="box has-text-centered">
             <h1 class="is-size-5">Your Final Score</h1>
             <p class="is-size-1">{{score}}</p>
@@ -17,14 +17,12 @@
                 </div>
             </nav>
         </div>
-    </div>
+    </main>
 </template>
 
 <script>
-import Modal from '@/components/Modal.vue'
 export default {
     name: 'result-screen',
-    components: {Modal},
     data() {
         return {
             score: 0,
@@ -32,7 +30,8 @@ export default {
             difficulty: "",
             type: "",
             category: "",
-            categoryName: ""
+            categoryName: "",
+            isLoading: false
         }
     },
     beforeRouteEnter(to, from, next) {
@@ -44,9 +43,9 @@ export default {
         }
     },
     beforeRouteLeave(to, from, next) {
-        let modal = this.$refs.notification
+        this.isLoading = true
         let body = {
-            user_id: this.$store.getters.currentUser.id,
+            user_id: JSON.parse(this.$store.getters.currentUser).id,
             game: {
                 category_name: this.categoryName,
                 category_id: this.category,
@@ -56,8 +55,6 @@ export default {
                 final_score: this.score
             }
         }
-        modal.canBeClosed = false
-        modal.openModal()
         fetch("https://kmt-backend.herokuapp.com/api/games", {
             method: "POST",
             headers: {

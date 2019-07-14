@@ -1,18 +1,20 @@
 <template>
-    <div id="game">
-        <h1 class="is-size-1" v-show="isLoading">Loading...</h1>
+    <main id="game">
+        <div class="notification is-info" v-show="isLoading">
+            Getting Questions from Open Trivia DB...
+        </div>
         <div v-show="!isLoading">
             <div class="box">
                 <p class="is-size-4">Question {{questionCount}} of {{amount}}</p>
                 <p class="is-size-5">Score {{this.score}}</p>
             </div>
-            <question :question="currentQuestion.question"></question>
+            <question :question="currentQuestion"></question>
             <answers 
                 :options="currentQuestion.incorrect_answers" 
                 :correct-option="currentQuestion.correct_answer"
                 v-on:answeredQuestion="questionAnswered($event)"></answers>
         </div>
-    </div>
+    </main>
 </template>
 
 <script>

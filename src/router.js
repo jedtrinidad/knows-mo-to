@@ -22,7 +22,17 @@ export default new Router({
       name: 'login',
       component: () => import(/* webpackChunkName: "login" */ './views/Login.vue'),
       meta: {
-        layout: 'hero'
+        layout: 'hero',
+        hideMenu: true
+      }
+    },
+    {
+      path: '/register',
+      name: 'registration',
+      component: () => import('./views/Register.vue'),
+      meta: {
+        layout: 'hero',
+        hideMenu: true
       }
     },
     {
