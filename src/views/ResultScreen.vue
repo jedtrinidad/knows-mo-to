@@ -43,6 +43,10 @@ export default {
         }
     },
     beforeRouteLeave(to, from, next) {
+        if(this.score < 0) {
+            window.alert("Score too low :(")
+            next()
+        }
         this.isLoading = true
         let body = {
             user_id: JSON.parse(this.$store.getters.currentUser).id,

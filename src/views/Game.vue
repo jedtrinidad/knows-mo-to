@@ -12,6 +12,7 @@
             <answers 
                 :options="currentQuestion.incorrect_answers" 
                 :correct-option="currentQuestion.correct_answer"
+                :is-done="isNearlyDone"
                 v-on:answeredQuestion="questionAnswered($event)"></answers>
         </div>
     </main>
@@ -32,6 +33,7 @@ export default {
             questionCount: 0,
             score: 0, 
             isDone: false,
+            isNearlyDone: false,
             isLoading: this.$store.state.isLoading,
             currentUser: this.$store.getters.currentUser
         }
@@ -80,9 +82,9 @@ export default {
                 else {
                     this.score -= 1
                 }
-            }
+            } 
             else {
-                // alert("Done!")
+                this.isNearlyDone = true
                 this.isDone = true
                 this.$router.push({
                     name: 'results', 

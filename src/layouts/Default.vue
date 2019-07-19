@@ -6,22 +6,15 @@
         <slot></slot>
       </main>
     </section>
-    <footer class="footer">
-      <p class="content has-text-centered">
-        Questions from
-        <a href="https://opentdb.com/" target="_blank">Open Trivia Database</a>
-        <br>Check out the code
-        <a href="https://github.com/jedtrinidad/knows-mo-to">here</a>
-      </p>
-    </footer>
+    <kmt-footer :in-hero="false"></kmt-footer>
   </div>
 </template>
 
 <script>
 import Navbar from '@/components/Navbar.vue'
-
+import KmtFooter from '@/components/Footer.vue'
 export default {
     name: 'default-layout',
-    components: { Navbar }    
+    components: { Navbar, KmtFooter }    
 }
 </script>

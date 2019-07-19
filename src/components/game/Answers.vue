@@ -10,7 +10,7 @@
             <p class="content">
                 {{result}}
             </p>
-            <button class="button is-rounded" @click="nextQuestion">Next Question</button>
+            <button class="button is-rounded" @click="nextQuestion" v-text="isDone ? 'Finish Quiz' : 'Next Question'"></button>
         </div>
     </div>
 </template>
@@ -18,7 +18,7 @@
 <script>
 export default {
     name: 'answers',
-    props: ['options', 'correctOption'],
+    props: ['options', 'correctOption', 'isDone'],
     data() {
         return {
             hasPicked: false,
